@@ -4,7 +4,7 @@ library(BIITE)
 # User-defined #
 ################
 
-eliFileName <- "./Data/human_elispot.txt.csv"
+eliFileName <- "./Data/human_elispot.txt"
 # location of ELISpot data
 
 pep_names <- paste("pep", 1:17, sep="")
