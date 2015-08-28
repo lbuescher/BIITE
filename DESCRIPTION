@@ -1,0 +1,12 @@
+Package: BIITE
+Title: Bayesian Immunogenicity Inference Tool for ELISpot
+Version: 0.0.0.9000
+Authors@R: c(person("Lies", "Boelen", email = "lies.boelen@gmail.com", role = c("aut", "cre")), person("Becca", "Asquith", email = "b.asquith@imperial.ac.uk", role = c("aut")))
+Description: A Metropolis-Hastings implementation to infer which peptide:HLA-II combinations are immunogenic, from ELISpot data
+Depends: R (>= 3.2.0)
+License: GPL (>= 2)
+LazyData: true
+Imports: ggplot2,
+    reshape2,
+    modeest,
+    entropy
