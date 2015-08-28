@@ -13,7 +13,7 @@ library(reshape2)
 #' @param fileName Filename for the figure
 
 plot_posteriors <- function(chain, nCol=3, fileName){
-  M <- reshape::melt(chain[,!colnames(chain)=="LL"])
+  M <- reshape2::melt(chain[,!colnames(chain)=="LL"])
 
   k <- ggplot(M)
   k <- k + geom_density(aes(x=value), size=1, show_guide=F)
