@@ -4,16 +4,19 @@ library(BIITE)
 # User-defined #
 ################
 
-eliFileName <- "./Data/human_elispot.txt"
-# location of ELISpot data
+#eliFileName <- "./Data/human_elispot.txt"
+#eli.dat <- read.table(eliFileName, sep="\t", header=T)   
+# location of and filename of ELISpot data; uncomment previous two lines; for testing purpose, use included data 
+data("human_elispot")
+eli.dat <- human_elispot
 
-pep_names <- paste("pep", 1:17, sep="")
+pep_names <- paste("pep", 1:2, sep="")
 # name of your peptides
 
 max_steps <- 1000#00
 # how long do you want your MH chains to be?
 
-outDir <- "/media/lboelen/MyPassport/MHCII/CODE/"
+outDir <- "./"
 # what is the output directory?
 # make sure it ends in "/" - or "\\" for windows
 
@@ -24,34 +27,29 @@ use_prior <- FALSE
 # change to TRUE if you want a prior
 
 predFileName <- NULL
-# predFileName <- "./Data/netmhciipan_pred.txt"
-# change if you want to use predictions
+# change to prediction fileName if you want to use predictions if you want to use predictions
+if ( use_prior == T){
+  #pred_data <- read.table(predFileName, header=T)
+  # uncomment line above when using own data; for now, use next two lines and comment these out when using own data
+  data("netmhciipan_pred")
+  pred_data <- netmhciipan_pred
+}  
+
 
 print_loglik_evol <- TRUE
 # change to no if you don't want a plot of the evolution of the likelihood with each time step
 
-molecs <- NULL
-# change this if the code below in 3. doesn't grep your names for the molecules; or change it there!
 
-########
-# CODE #
-########
-
-
-# 1. import predictions if using a prior
-if ( use_prior == T){
-  pred_data <- read.table(predFileName, header=T)
-}  
-
-# 2. import elispot data
-eli.dat <- read.table(eliFileName, sep="\t", header=T)   
-
-# 3. extract names of the molecules in the population :: molecs
+# extract names of the molecules in the population :: molecs
 molecs <- colnames(eli.dat)[(grepl("DRB1_", colnames(eli.dat)) | grepl("DQB1_", colnames(eli.dat))) & !grepl("al", colnames(eli.dat))]
+# change this to whatever works for you, either using a grepl or just manually entering the HLA-II molecules in a character vector
 write.table(molecs, paste(outDir, "molecs.txt"), row.names=F, col.names=F, sep="\t")
 
+#################
+# RUN ALGORITHM #
+#################
 
-# 4. for loop to analyze each peptide
+# for loop to analyze each peptide
 for ( pep in peps_for_analysis ){
   cat(pep)
   cat("\n")
@@ -96,6 +94,6 @@ for ( pep in peps_for_analysis ){
   plot_posteriors(mh_out, nCol=3, fileName=paste(outDir, pep, "_posteriors.png"))
 }
 
-# 5. Output dataframe with mode, mean, median and DKL-vs-uniform for each pHLA combo
+# Output dataframe with mode, mean, median and DKL-vs-uniform for each pHLA combo
 res <- get_overview_df(peps_for_analysis, chainDir=outDir, molecs)
 write.table(res, paste(outDir, "results_table.txt"), col.names=T, row.names=F, sep="\t")
