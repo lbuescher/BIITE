@@ -6,7 +6,7 @@ To install, you can use devtools
 
 ```
 #if you don't have devtools, install it
-install.packages(devtools)
+install.packages("devtools")
 library(devtools)
 devtools::install_github("liesb/BIITE")
 ```
