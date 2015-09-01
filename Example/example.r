@@ -10,7 +10,7 @@ library(BIITE)
 data("simul_data")
 eli.dat <- simul_data
 
-pep_names <- paste0("pep", 1:2, sep="")
+pep_names <- paste0("pep_", 1:2)
 # name of your peptides
 
 max_steps <- 1000#00

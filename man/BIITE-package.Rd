@@ -30,12 +30,14 @@
 
 \keyword{ package }
 \examples{
+  library(BIITE)
+  library(ggplot2)
   data("simul_data")
   eli.dat <- simul_data
-  pep_names <- paste0("pep", 1:2, sep="")
+  pep_names <- paste0("pep_", 1:17)
   max_steps <- 1000
   outDir <- "./"
-  peps_for_analysis <- pep_names
+  peps_for_analysis <- pep_names[1:2]
   use_prior <- FALSE
   print_loglik_evol <- TRUE
   molecs <- colnames(eli.dat)[(grepl("DRB1_", colnames(eli.dat)) | grepl("DQB1_", colnames(eli.dat))) & !grepl("al", colnames(eli.dat))]
@@ -53,7 +55,7 @@
     else { p.df <- NULL }
     # Normally, we need to find out which radius to use; fixed now. 
     # See example.r for how this is normally handled
-    RAD <- 0.01
+    RAD <- list(root=0.01)
     mh_out <- mh_chain(eli.dat, molecs, init_h=init, max_steps, pep,
                        unif.prop=F, radius=RAD$root, p.df=p.df)
     mh_out$LogLik <- as.double(as.character(mh_out$LogLik))
