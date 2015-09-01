@@ -10,6 +10,6 @@ generate_random_hypothesis(m, upper_lim = 1)
 \item{m}{Number of molecules in ELISpot population}
 }
 \description{
-Returns a random hypothesis, used to initiate the MH chain. Based on
+Returns a random hypothesis, used to initiate the MH chain.
 }
 
