@@ -7,8 +7,8 @@ library(BIITE)
 #eliFileName <- "./Data/human_elispot.txt"
 #eli.dat <- read.table(eliFileName, sep="\t", header=T)   
 # location of and filename of ELISpot data; uncomment previous two lines; for testing purpose, use included data 
-data("human_elispot")
-eli.dat <- human_elispot
+data("simul_data")
+eli.dat <- simul_data
 
 pep_names <- paste0("pep", 1:2, sep="")
 # name of your peptides

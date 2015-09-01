@@ -30,8 +30,8 @@
 
 \keyword{ package }
 \examples{
-  data("human_elispot")
-  eli.dat <- human_elispot
+  data("simul_data")
+  eli.dat <- simul_data
   pep_names <- paste0("pep", 1:2, sep="")
   max_steps <- 1000
   outDir <- "./"
