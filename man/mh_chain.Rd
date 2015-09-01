@@ -20,7 +20,7 @@ mh_chain(eli.dat, mol.names, init_h, max_steps = 5000, pep, unif.prop = T,
 
 \item{unif.prop}{If TRUE, choose proposal states from [0,1]^m}
 
-\item{radius}{If unif.prop is FALSE, we look for a proposal state in a hypercube around h restricted by radius. Should be trained such that the acceptance rate of the chain is around 50%, see example.r.}
+\item{radius}{If unif.prop is FALSE, we look for a proposal state in a hypercube around h restricted by radius. Should be trained such that the acceptance rate of the chain is around 50\%, see example.r.}
 
 \item{p.df}{Dataframe which describes the parameters of the prior distributions for each HLA}
 }
