@@ -1,4 +1,6 @@
 library(BIITE)
+library(ggplot2)
+library(reshape2)
 
 ################
 # User-defined #
