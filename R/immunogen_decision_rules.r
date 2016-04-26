@@ -202,12 +202,12 @@ get_overview_df <- function(peps_for_analysis, chainDir, molecs){
 #' @param what The summary value used to rank the HLA. Defaults to "Mode", but can also be "Mean" or "Median"
 
 get_hla_ranking <- function(peps_for_analysis, res, molecs, eli.dat, what="Mode"){
-  res$n <- unlist(lapply(as.character(res$Molec), function(x){sum(eli.dat[,x]>0)}))
-  eli.copy <- eli.dat
   for (pep in peps_for_analysis){
+    eli.copy <- eli.dat[!is.na(eli.dat[,pep]) & as.character(eli.dat[,pep]) %in% c("0", "1", "TRUE", "FALSE"),]
     r1 <- res[res$What==what & res$Pep==pep,]
     r1 <- r1[order(r1$Value, decreasing=T),]
-    subs <- eli.dat[,colnames(eli.dat) %in% molecs]
+    r1$n <- unlist(lapply(as.character(r1$Molec), function(x){sum(eli.copy[,x]>0)}))
+    subs <- eli.copy[,colnames(eli.copy) %in% molecs]
     eli.copy$strongest <- unlist(lapply(1:dim(eli.copy)[1],function(x){
       molec_person <- colnames(subs)[(subs[x,]>0)]
       as.character(r1[r1$Molec %in% molec_person,]$Molec[1])
