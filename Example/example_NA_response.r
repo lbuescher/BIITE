@@ -43,7 +43,7 @@ print_loglik_evol <- TRUE
 # change to no if you don't want a plot of the evolution of the likelihood with each time step
 
 # extract names of the molecules in the population :: molecs
-molecs <- colnames(eli.dat)[(grepl("DRB1_", colnames(eli.dat)) | grepl("DQB1_", colnames(eli.dat))) & !grepl("al", colnames(eli.dat))]
+molecs_all <- colnames(eli.dat)[(grepl("DRB1_", colnames(eli.dat)) | grepl("DQB1_", colnames(eli.dat))) & !grepl("al", colnames(eli.dat))]
 # change this to whatever works for you, either using a grepl or just manually entering the HLA-II molecules in a character vector
 
 write.table(molecs, paste0(outDir, "molecs.txt"), row.names=F, col.names=F, sep="\t")
@@ -67,6 +67,10 @@ for ( pep in peps_for_analysis ){
   
   # take out NA'ed responses
   eli.dat.na <- eli.dat[!is.na(eli.dat[,pep]) & as.character(eli.dat[,pep]) %in% c("0", "1", "TRUE", "FALSE"),]
+  molecs <- molecs_all[unlist(lapply(molecs_all, function(x){
+    sum(eli.dat.na[!is.na(eli.dat.na[,x]),x]>0)>0
+  }))]
+ 
   
   # We need to find out which radius to use
   # wrapper function so we can find the right radius to get an acceptance rate of about 50%
@@ -105,8 +109,8 @@ for ( pep in peps_for_analysis ){
 }
 
 # Output dataframe with mode, mean, median and DKL-vs-uniform for each pHLA combo
-res <- get_overview_df(peps_for_analysis, chainDir=outDir, molecs)
+res <- get_overview_df(peps_for_analysis, chainDir=outDir, molecs_all)
 write.table(res, paste0(outDir, "results_table.txt"), col.names=T, row.names=F, sep="\t")
 
 # Find 'explanatory' pHLA combinations (done for each peptide separately)
-get_hla_ranking(peps_for_analysis, res, molecs, eli.dat)
+get_hla_ranking(peps_for_analysis, res, molecs_all, eli.dat)
