@@ -113,4 +113,4 @@ res <- get_overview_df(peps_for_analysis, chainDir=outDir, molecs_all)
 write.table(res, paste0(outDir, "results_table.txt"), col.names=T, row.names=F, sep="\t")
 
 # Find 'explanatory' pHLA combinations (done for each peptide separately)
-get_hla_ranking(peps_for_analysis, res, eli.dat)
+get_hla_ranking(peps_for_analysis, res, molecs_all, eli.dat)
