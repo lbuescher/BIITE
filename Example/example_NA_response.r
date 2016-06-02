@@ -70,7 +70,7 @@ for ( pep in peps_for_analysis ){
   molecs <- molecs_all[unlist(lapply(molecs_all, function(x){
     sum(eli.dat.na[!is.na(eli.dat.na[,x]),x]>0)>0
   }))]
- 
+  write.table(molecs, paste0(outDir, "molecs_", pep, ".txt"), row.names=F, col.names=F, sep="\t")
   
   # We need to find out which radius to use
   # wrapper function so we can find the right radius to get an acceptance rate of about 50%
