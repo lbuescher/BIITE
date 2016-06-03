@@ -159,7 +159,7 @@ get_overview_df <- function(peps_for_analysis, chainDir, molecs){
     try( ch <- read.csv(paste(chainDir, pep, "_full_chain.txt", sep=""), skip=1, header=F, sep=",") )
     if (exists("ch")){
       # load molecs for the peptide
-      try(molecs_pep <- as.character(read.csv(paste0(chainDir, "molecs_", pep, ".txt"), header=F)$V1))
+      try(molecs_pep <- as.character(read.csv(paste0(chainDir, "molecs_", pep, ".txt"), header=F)$V1), silent=T)
       if (!exists("molecs_pep")){
         molecs_pep <- molecs
       }
