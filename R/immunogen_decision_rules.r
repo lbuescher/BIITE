@@ -160,6 +160,9 @@ get_overview_df <- function(peps_for_analysis, chainDir, molecs){
     if (exists("ch")){
       # load molecs for the peptide
       molecs_pep <- as.character(read.csv(paste0(chainDir, "molecs_", pep, ".txt"), header=F)$V1)
+      if (!exists("molecs_pep")){
+        molecs_pep <- molecs
+      }
       colnames(ch) <- c(molecs_pep, "LL")
       for ( molec in molecs_pep ){
         res$Molec[r] <- molec
