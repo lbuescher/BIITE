@@ -158,8 +158,10 @@ get_overview_df <- function(peps_for_analysis, chainDir, molecs){
   for ( pep in peps_for_analysis ){
     try( ch <- read.csv(paste(chainDir, pep, "_full_chain.txt", sep=""), skip=1, header=F, sep=",") )
     if (exists("ch")){
-      colnames(ch) <- c(molecs, "LL")
-      for ( molec in molecs ){
+      # load molecs for the peptide
+      molecs_pep <- read.csv(paste0(chainDir, "molecs_", pep, ".txt"))
+      colnames(ch) <- c(molecs_pep, "LL")
+      for ( molec in molecs_pep ){
         res$Molec[r] <- molec
         res$Pep[r] <- pep
         res$What[r] <- "Mean"
@@ -182,9 +184,11 @@ get_overview_df <- function(peps_for_analysis, chainDir, molecs){
         r <- r + 1
       }            
       rm(ch)
+      rm(molecs_pep)
     }
   }
   res <- res[!is.na(res$Pep),]
+  return(res)
 }
 
 # 9. Find 'explanatory' pHLA combinations (done for each peptide separately)
