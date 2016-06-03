@@ -57,8 +57,7 @@ write.table(molecs, paste0(outDir, "molecs.txt"), row.names=F, col.names=F, sep=
 for ( pep in peps_for_analysis ){
   cat(pep)
   cat("\n")
-  # get initial hypotheses
-  init <- unlist(lapply(rep(length(molecs), 1), generate_random_hypothesis))
+
   # get the dataframe with shape parameters if you are using a prior
   if ( use_prior == T){
     p.df <- get_shape_df(pred_data, pep, mode_F=0.001, sd_F=0.15, mode_T=0.35, sd_T=0.2)
@@ -71,6 +70,9 @@ for ( pep in peps_for_analysis ){
     sum(eli.dat.na[!is.na(eli.dat.na[,x]),x]>0)>0
   }))]
   write.table(molecs, paste0(outDir, "molecs_", pep, ".txt"), row.names=F, col.names=F, sep="\t")
+  
+  # get initial hypotheses
+  init <- unlist(lapply(rep(length(molecs), 1), generate_random_hypothesis))
   
   # We need to find out which radius to use
   # wrapper function so we can find the right radius to get an acceptance rate of about 50%
